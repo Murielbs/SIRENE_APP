@@ -138,6 +138,40 @@ model MilitarEquipe {
 model FormularioBasico {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   idOcorrencia String?  @db.ObjectId
+  
+  // Campos do Formulário Básico
+  pontoBase             String?
+  ome                   String?
+  viaturaResponsavel    String?
+  numeroAviso           String?
+  data                  DateTime?
+  horaRecebimento       DateTime?
+  formaAcionamento      String?
+  formaAcionamentoOutros String?
+  situacaoOcorrencia    String?
+  situacaoOcorrenciaOutros String?
+  localAcionamento      String?
+  localAcionamentoOutros String?
+  areaOBM               Boolean?
+  codigoLocal           String?
+  referencia            String?
+  solicitanteNome       String?
+  solicitanteTelefone   String?
+  deslocamento          Json?      // Para armazenar horários de saída, chegada, etc.
+  viaturaLocal          String?
+  placaViaturaLocal     String?
+  apoio                 String?
+  viaturasEnvolvidas    Json?      // Para armazenar múltiplas viaturas
+  historico             String?
+  continuacao           Boolean?
+  dificuldadesAtuacao   String?
+  eventoNatureza        String?
+  formulariosPreenchidos String?
+  tipoVitima            String?
+  veiculosEnvolvidos    Json?
+  guarnicaoEmpenhada    Json?
+  vistoDivisaoOperacoes String?
+
   dados        Json?
   criadoEm     DateTime @default(now()) @map("criado_em")
   atualizadoEm DateTime? @map("atualizado_em")
