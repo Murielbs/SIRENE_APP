@@ -69,52 +69,8 @@ model Ocorrencia {
   // Relacionamentos
   registrosOcorrencia RegistroOcorrencia[]
   relatorios          Relatorio[]
-  // Formulários específicos (ex.: BÁSICO, PRÉ-HOSPITALAR, INCÊNDIO, SALVAMENTO, PRODUTOS_PERIGOSOS)
-  formularios         Formulario[]
-  // Viaturas/veículos envolvidos detalhados
-  viaturasEnvolvidas  ViaturaEnvolvida[]
 
   @@map("Ocorrencia")
-}
-
-// Tipo de formulário/atendimento (pode ser expandido se precisar de mais tipos)
-enum FormularioTipo {
-  BASICO
-  PRE_HOSPITAL
-  INCENDIO
-  SALVAMENTO
-  PRODUTOS_PERIGOSOS
-}
-
-// Modelo genérico para guardar os dados dos formulários específicos
-// Usamos um campo Json `dados` para permitir evolução fácil conforme você enviar os 3 formulários restantes.
-model Formulario {
-  id          String         @id @default(auto()) @map("_id") @db.ObjectId
-  tipo        FormularioTipo
-  dados       Json?
-  idOcorrencia String?       @db.ObjectId
-
-  // Relacionamento com Ocorrencia
-  ocorrencia  Ocorrencia?    @relation(fields: [idOcorrencia], references: [id])
-
-  @@map("Formulario")
-}
-
-// Modelo para detalhar as viaturas/veículos envolvidos em uma ocorrência
-model ViaturaEnvolvida {
-  id           String  @id @default(auto()) @map("_id") @db.ObjectId
-  tipo         String?
-  prefixo      String?
-  placa        String?
-  numeroViatura String?
-  guarnicao    String?
-  condutor     String?
-  observacoes  String?
-  idOcorrencia String? @db.ObjectId
-
-  ocorrencia   Ocorrencia? @relation(fields: [idOcorrencia], references: [id])
-
-  @@map("ViaturaEnvolvida")
 }
 
 // Tabela: RegistroOcorrencia
@@ -175,4 +131,65 @@ model MilitarEquipe {
   equipe  Equipe  @relation(fields: [idEquipe], references: [id])
 
   @@map("MilitarEquipe")
+}
+
+// Formulários de atendimento (cada tipo em sua própria coleção)
+// 1) BÁSICO
+model FormularioBasico {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  idOcorrencia String?  @db.ObjectId
+  dados        Json?
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime? @map("atualizado_em")
+
+  // relação mantida pelo id (idOcorrencia) sem constraint Prisma para evitar necessidade de campo inverso
+  @@map("FormularioBasico")
+}
+
+// 2) PRÉ-HOSPITALAR - CVI
+model FormularioPreHospital {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  idOcorrencia String?  @db.ObjectId
+  dados        Json?
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime? @map("atualizado_em")
+
+  // relação mantida pelo id (idOcorrencia) sem constraint Prisma
+  @@map("FormularioPreHospital")
+}
+
+// 3) INCÊNDIO
+model FormularioIncendio {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  idOcorrencia String?  @db.ObjectId
+  dados        Json?
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime? @map("atualizado_em")
+
+  // relação mantida pelo id (idOcorrencia) sem constraint Prisma
+  @@map("FormularioIncendio")
+}
+
+// 4) SALVAMENTO
+model FormularioSalvamento {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  idOcorrencia String?  @db.ObjectId
+  dados        Json?
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime? @map("atualizado_em")
+
+  // relação mantida pelo id (idOcorrencia) sem constraint Prisma
+  @@map("FormularioSalvamento")
+}
+
+// 5) PRODUTOS PERIGOSOS
+model FormularioProdutosPerigosos {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  idOcorrencia String?  @db.ObjectId
+  dados        Json?
+  criadoEm     DateTime @default(now()) @map("criado_em")
+  atualizadoEm DateTime? @map("atualizado_em")
+
+  // relação mantida pelo id (idOcorrencia) sem constraint Prisma
+  @@map("FormularioProdutosPerigosos")
 }
