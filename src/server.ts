@@ -14,6 +14,11 @@ import equipeRoutes from './routes/equipe';
 import registroOcorrenciaRoutes from './routes/registroOcorrencia';
 import logAuditoriaRoutes from './routes/logAuditoria';
 import militarEquipeRoutes from './routes/militarEquipe';
+import formularioBasicoRoutes from './routes/formularioBasico';
+import formularioPreHospitalRoutes from './routes/formularioPreHospital';
+import formularioIncendioRoutes from './routes/formularioIncendio';
+import formularioSalvamentoRoutes from './routes/formularioSalvamento';
+import formularioProdutosPerigososRoutes from './routes/formularioProdutosPerigosos';
 
 // Carregar variáveis de ambiente
 dotenv.config();
@@ -52,6 +57,12 @@ app.use('/api/equipe', equipeRoutes);
 app.use('/api/registro-ocorrencia', registroOcorrenciaRoutes);
 app.use('/api/log-auditoria', logAuditoriaRoutes);
 app.use('/api/militar-equipe', militarEquipeRoutes);
+// Formulários de atendimento
+app.use('/api/formulario-basico', formularioBasicoRoutes);
+app.use('/api/formulario-pre-hospital', formularioPreHospitalRoutes);
+app.use('/api/formulario-incendio', formularioIncendioRoutes);
+app.use('/api/formulario-salvamento', formularioSalvamentoRoutes);
+app.use('/api/formulario-produtos-perigosos', formularioProdutosPerigososRoutes);
 
 // Rota de health check
 app.get('/api/health', (req, res) => {
